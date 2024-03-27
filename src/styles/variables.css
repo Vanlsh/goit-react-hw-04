@@ -6,4 +6,8 @@
   --color-dark: #212121;
   --color-dark-light: #252525;
   --color-red: rgb(176, 70, 70);
+  --color-blue: #484baa;
+
+  --color-mainBackground: linear-gradient(to bottom, #c9d6ff, #e2e2e2);
+  --color-tagBackground: linear-gradient(to bottom, #ffd194, #d1913c);
 }
