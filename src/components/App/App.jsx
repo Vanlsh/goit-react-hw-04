@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "react-modal";
 
-import { getImages } from "../../api/getImages";
 import { modalStyles } from "../../utils/modalStyles.js";
 
 import css from "./App.module.css";
@@ -14,54 +13,16 @@ import Container from "../Container/Container.jsx";
 import MainSection from "../MainSection/MainSection.jsx";
 import Notification from "../Notification/Notification.jsx";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
+import { usePhotos } from "../../hooks/usePhotos.js";
 
 Modal.setAppElement("#root");
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-
-  const [photos, setPhotos] = useState(null);
-  const [totalPages, setTotalPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({ isError: false, message: "" });
+  const { page, photos, totalPages, isLoading, error, searchPhotos, loadMore } =
+    usePhotos();
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-
-  useEffect(() => {
-    if (!query) return;
-
-    const fetchData = async () => {
-      try {
-        setError({ isError: false, message: "" });
-        setIsLoading(true);
-        const response = await getImages(query, page);
-        const { data } = response;
-        setPhotos((prevPhotos) =>
-          prevPhotos ? [...prevPhotos, ...data.results] : data.results
-        );
-        setTotalPage(data.total_pages);
-      } catch (e) {
-        setError({ isError: true, message: e.message });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [query, page]);
-
-  const handleSearch = (newQuery) => {
-    if (newQuery === query) return;
-    setQuery(newQuery);
-    setPhotos(null);
-    setPage(1);
-    setQuery(newQuery);
-  };
-
-  const onLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
 
   const onModalOpen = (photo) => {
     setSelectedPhoto(photo);
@@ -76,18 +37,18 @@ function App() {
   const isShowBtn = Boolean(photos?.length && !isLoading && page < totalPages);
   return (
     <Container>
-      <SearchBar handleSearch={handleSearch} />
+      <SearchBar handleSearch={searchPhotos} />
       <MainSection>
         {photos && <ImageGallery photos={photos} onModalOpen={onModalOpen} />}
         {photos?.length === 0 && (
           <Notification>No image and photo are found</Notification>
         )}
-        {error.isError && <ErrorMessage message={error.message} />}
+        {error && <ErrorMessage message={error} />}
         {isLoading && <Loader />}
 
         {isShowBtn && (
           <div className={css.btnWrapper}>
-            <LoadMoreBtn onLoadMore={onLoadMore}>Load More</LoadMoreBtn>
+            <LoadMoreBtn onLoadMore={loadMore}>Load More</LoadMoreBtn>
           </div>
         )}
       </MainSection>
