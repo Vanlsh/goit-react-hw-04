@@ -3,7 +3,6 @@ import Modal from "react-modal";
 
 import { getImages } from "../../api/getImages";
 import { modalStyles } from "../../utils/modalStyles.js";
-import photosJson from "../../photos.json";
 
 import css from "./App.module.css";
 import ImageGallery from "../ImageGallery/ImageGallery.jsx";
@@ -22,7 +21,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
-  const [photos, setPhotos] = useState(photosJson);
+  const [photos, setPhotos] = useState(null);
   const [totalPages, setTotalPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ isError: false, message: "" });
@@ -45,7 +44,6 @@ function App() {
         setTotalPage(data.total_pages);
       } catch (e) {
         setError({ isError: true, message: e.message });
-        console.log(e);
       } finally {
         setIsLoading(false);
       }
