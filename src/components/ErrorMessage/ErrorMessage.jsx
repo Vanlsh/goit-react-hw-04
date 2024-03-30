@@ -1,8 +1,11 @@
-import css  from "./ErrorMessage.module.css"
-const ErrorMessage = () => {
-  return (
-    <div className={css.error}>ErrorMessage</div>
-  )
-}
+import css from "./ErrorMessage.module.css";
 
-export default ErrorMessage
+const ErrorMessage = ({ message }) => {
+  return (
+    <div className={css.container}>
+      <p>{message}</p>
+    </div>
+  );
+};
+
+export default ErrorMessage;

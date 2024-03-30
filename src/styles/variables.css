@@ -4,10 +4,11 @@
   --color-light: #e9e5e5;
   --color-gray-background: #b0abab;
   --color-dark: #212121;
+  --color-dark-transparent: rgba(33, 33, 33, 0.9);
   --color-dark-light: #252525;
   --color-red: rgb(176, 70, 70);
   --color-blue: #484baa;
-
+  --color-blue-transparent: rgba(72, 75, 170, 0.5);
   --color-mainBackground: linear-gradient(to bottom, #c9d6ff, #e2e2e2);
   --color-tagBackground: linear-gradient(to bottom, #ffd194, #d1913c);
 }

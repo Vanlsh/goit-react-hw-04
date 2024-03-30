@@ -3,7 +3,7 @@ import Modal from "react-modal";
 
 import { getImages } from "../../api/getImages";
 import { modalStyles } from "../../utils/modalStyles.js";
-// import photosJson from "../../photos.json";
+import photosJson from "../../photos.json";
 
 import css from "./App.module.css";
 import ImageGallery from "../ImageGallery/ImageGallery.jsx";
@@ -14,6 +14,7 @@ import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn.jsx";
 import Container from "../Container/Container.jsx";
 import MainSection from "../MainSection/MainSection.jsx";
 import Notification from "../Notification/Notification.jsx";
+import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 
 Modal.setAppElement("#root");
 
@@ -21,9 +22,10 @@ function App() {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
-  const [photos, setPhotos] = useState(null);
+  const [photos, setPhotos] = useState(photosJson);
   const [totalPages, setTotalPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({ isError: false, message: "" });
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -33,14 +35,16 @@ function App() {
 
     const fetchData = async () => {
       try {
+        setError({ isError: false, message: "" });
+        setIsLoading(true);
         const response = await getImages(query, page);
         const { data } = response;
         setPhotos((prevPhotos) =>
           prevPhotos ? [...prevPhotos, ...data.results] : data.results
         );
         setTotalPage(data.total_pages);
-        console.log(data);
       } catch (e) {
+        setError({ isError: true, message: e.message });
         console.log(e);
       } finally {
         setIsLoading(false);
@@ -78,19 +82,24 @@ function App() {
         {photos?.length === 0 && (
           <Notification>No image and photo are found</Notification>
         )}
+        {error.isError && <ErrorMessage message={error.message} />}
         {isLoading && <Loader />}
-        <div className={css.btnWrapper}>
-          {isShowBtn && (
+
+        {isShowBtn && (
+          <div className={css.btnWrapper}>
             <LoadMoreBtn onLoadMore={onLoadMore}>Load More</LoadMoreBtn>
-          )}
-        </div>
+          </div>
+        )}
       </MainSection>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={onModalClose}
         style={modalStyles}
+        closeTimeoutMS={200}
       >
-        {selectedPhoto && <ImageModal photo={selectedPhoto} />}
+        {selectedPhoto && (
+          <ImageModal photo={selectedPhoto} closeModal={onModalClose} />
+        )}
       </Modal>
     </Container>
   );
