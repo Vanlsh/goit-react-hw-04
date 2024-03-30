@@ -34,7 +34,9 @@ function App() {
     setIsOpen(false);
     document.body.classList.remove("modal-open");
   };
+
   const isShowBtn = Boolean(photos?.length && !isLoading && page < totalPages);
+
   return (
     <Container>
       <SearchBar handleSearch={searchPhotos} />
