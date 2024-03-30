@@ -1,3 +1,16 @@
 .button {
-  color: var(--color-dark);
+  padding: 10px 20px;
+
+  border-radius: 2px;
+
+  color: var(--color-white);
+  background-color: var(--color-blue);
+
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.button:hover,
+.button:focus {
+  opacity: 0.8;
 }

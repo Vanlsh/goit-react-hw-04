@@ -1,5 +1,5 @@
-.loader {
+.btnWrapper {
+  padding: 20px 10px;
   display: flex;
   justify-content: center;
-  padding: 20px 5px;
 }

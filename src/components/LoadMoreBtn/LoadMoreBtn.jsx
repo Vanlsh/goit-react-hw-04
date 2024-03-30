@@ -1,10 +1,10 @@
 import css from "./LoadMoreBtn.module.css";
 import PropTypes from "prop-types";
 
-const LoadMoreBtn = ({ onLoadMore }) => {
+const LoadMoreBtn = ({ onLoadMore, refBtn, children }) => {
   return (
-    <button className={css.button} onClick={onLoadMore}>
-      Load More
+    <button ref={refBtn} className={css.button} onClick={onLoadMore}>
+      {children}
     </button>
   );
 };

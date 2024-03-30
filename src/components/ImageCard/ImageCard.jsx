@@ -5,7 +5,12 @@ const ImageCard = ({ photo, onModalOpen }) => {
   const { urls, alt_description } = photo;
   return (
     <div className={css.card} onClick={() => onModalOpen(photo)}>
-      <img src={urls.small} alt={alt_description} />
+      <img
+        className={css.img}
+        loading="lazy"
+        src={urls.small}
+        alt={alt_description}
+      />
     </div>
   );
 };
