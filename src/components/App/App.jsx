@@ -52,6 +52,8 @@ function App() {
   }, [query, page]);
 
   const handleSearch = (newQuery) => {
+    if (newQuery === query) return;
+    setQuery(newQuery);
     setPhotos(null);
     setPage(1);
     setQuery(newQuery);
