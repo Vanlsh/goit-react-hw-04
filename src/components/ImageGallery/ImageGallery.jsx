@@ -1,8 +1,6 @@
 import { useRef, useEffect } from "react";
 import css from "./ImageGallery.module.css";
 import PropTypes from "prop-types";
-import Grid from "../Grid/Grid.jsx";
-import GridItem from "../GridItem/GridItem.jsx";
 import ImageCard from "../ImageCard/ImageCard.jsx";
 import { PHOTO_PER_PAGE } from "../../utils/constants.js";
 
@@ -18,17 +16,19 @@ const ImageGallery = ({ photos, onModalOpen }) => {
   }, [photos]);
 
   return (
-    <Grid className={css.gallery} photosRef={photosRef}>
+    <ul className={css.list} ref={photosRef}>
       {photos.map((photo) => (
-        <GridItem key={photo.id}>
+        <li key={photo.id} className={css.item}>
           <ImageCard photo={photo} onModalOpen={onModalOpen} />
-        </GridItem>
+        </li>
       ))}
-    </Grid>
+    </ul>
   );
 };
+
 ImageGallery.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.object),
   onModalOpen: PropTypes.func,
 };
+
 export default ImageGallery;

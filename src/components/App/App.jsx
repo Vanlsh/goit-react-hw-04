@@ -1,7 +1,4 @@
 import { useState } from "react";
-import Modal from "react-modal";
-
-import { modalStyles } from "../../utils/modalStyles.js";
 
 import css from "./App.module.css";
 import ImageGallery from "../ImageGallery/ImageGallery.jsx";
@@ -14,8 +11,6 @@ import MainSection from "../MainSection/MainSection.jsx";
 import Notification from "../Notification/Notification.jsx";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 import { usePhotos } from "../../hooks/usePhotos.js";
-
-Modal.setAppElement("#root");
 
 function App() {
   const { page, photos, totalPages, isLoading, error, searchPhotos, loadMore } =
@@ -54,16 +49,11 @@ function App() {
           </div>
         )}
       </MainSection>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={onModalClose}
-        style={modalStyles}
-        closeTimeoutMS={200}
-      >
-        {selectedPhoto && (
-          <ImageModal photo={selectedPhoto} closeModal={onModalClose} />
-        )}
-      </Modal>
+      <ImageModal
+        photo={selectedPhoto}
+        closeModal={onModalClose}
+        modalIsOpen={modalIsOpen}
+      />
     </Container>
   );
 }
