@@ -1,22 +1,23 @@
 import css from "./ImageCard.module.css";
 import PropTypes from "prop-types";
 
-const ImageCard = ({ photo, onModalOpen }) => {
-  const { urls, alt_description } = photo;
+const ImageCard = ({ imgUrl, description, onModalOpen }) => {
   return (
-    <div className={css.card} onClick={() => onModalOpen(photo)}>
+    <div className={css.card}>
       <img
         className={css.img}
         loading="lazy"
-        src={urls.small}
-        alt={alt_description}
+        src={imgUrl}
+        alt={description}
+        onClick={onModalOpen}
       />
     </div>
   );
 };
 
 ImageCard.propTypes = {
-  photo: PropTypes.object,
+  imgUrl: PropTypes.string,
+  description: PropTypes.string,
   onModalOpen: PropTypes.func,
 };
 

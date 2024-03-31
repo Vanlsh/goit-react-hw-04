@@ -19,7 +19,11 @@ const ImageGallery = ({ photos, onModalOpen }) => {
     <ul className={css.list} ref={photosRef}>
       {photos.map((photo) => (
         <li key={photo.id} className={css.item}>
-          <ImageCard photo={photo} onModalOpen={onModalOpen} />
+          <ImageCard
+            imgUrl={photo.urls.small}
+            description={photo.alt_description}
+            onModalOpen={() => onModalOpen(photo)}
+          />
         </li>
       ))}
     </ul>
