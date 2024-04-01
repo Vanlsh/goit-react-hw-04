@@ -15,6 +15,7 @@ const SearchBar = ({ handleSearch }) => {
     }
     handleSearch(newQuery);
   };
+
   return (
     <header className={css.search}>
       <Form handleSearch={onSubmit} />
