@@ -1,29 +1,12 @@
 import { FiSearch } from "react-icons/fi";
-import { useState } from "react";
 import PropTypes from "prop-types";
 import css from "./Form.module.css";
-import toast, { Toaster } from "react-hot-toast";
-
-const notify = () =>
-  toast("Please, enter the text", { position: "bottom-center" });
 
 const Form = ({ handleSearch }) => {
-  const [value, setValue] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const query = value.trim();
-    if (!query.length) {
-      notify();
-      return;
-    }
-
+    const query = e.target.elements.search.value;
     handleSearch(query);
-  };
-
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setValue(value);
   };
 
   return (
@@ -37,12 +20,9 @@ const Form = ({ handleSearch }) => {
           className={css.input}
           placeholder="Search images and photos"
           name="search"
-          value={value}
-          onChange={handleChange}
           autoFocus
         />
       </form>
-      <Toaster />
     </>
   );
 };
