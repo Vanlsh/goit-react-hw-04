@@ -1,5 +1,6 @@
 import axios from "axios";
 import { PHOTO_PER_PAGE } from "./utils/constants.js";
+
 const instance = axios.create({
   baseURL: "https://api.unsplash.com/",
   headers: {
